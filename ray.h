@@ -2,13 +2,11 @@
 #define RAY_H
 
 #include "vector.h"
-using obj_Point = obj_Vector;
 
 class obj_Ray {
     private:
         obj_Point attri_Orig;
         obj_Point attri_Dir;
-
     
     public:
         // Constructeurs

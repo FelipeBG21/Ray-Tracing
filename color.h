@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "vector.h"
-using obj_Color = obj_Vector;
 
 void color_printer(std::ostream &out, obj_Color color, int n_Samples){
     double r = color.get_value0();

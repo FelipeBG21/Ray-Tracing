@@ -72,7 +72,12 @@ class obj_Vector {
         }
         double length() const {
             return sqrt(length_squared());
-        }  
+        }
+
+        bool near_zero() const { // Returns true if the vector is close to zero in all dimensions.
+        const double a = 1e-8;
+        return (fabs(attri_V[0]) < a) && (fabs(attri_V[1]) < a) && (fabs(attri_V[2]) < a);
+    }
         
 };
 
@@ -119,14 +124,24 @@ obj_Vector operator -(const obj_Vector &arg_v1, const obj_Vector &arg_v2) {
                         arg_v1.get_value2() - arg_v2.get_value2());
 }
 
+obj_Vector cross(const obj_Vector &arg_v1, const obj_Vector &arg_v2) {
+    return obj_Vector(arg_v1.get_value1() * arg_v2.get_value2() - arg_v1.get_value2() * arg_v2.get_value1(),
+                        arg_v1.get_value2() * arg_v2.get_value0() - arg_v1.get_value0() * arg_v2.get_value2(),
+                        arg_v1.get_value0() * arg_v2.get_value1() - arg_v1.get_value1() * arg_v2.get_value0());
+}
+
 // Unitarisation du vecteur
 obj_Vector unit_vector(obj_Vector arg_v) {
     return arg_v / arg_v.length();
 }
 
+obj_Vector random() { // Pour créer une random vecteur
+    return obj_Vector(random_double(), random_double(), random_double());
+}
+
 obj_Vector random(double min, double max) { // Pour créer une random vecteur
-            return obj_Vector(random_double(min,max), random_double(min,max), random_double(min,max));
-        }
+    return obj_Vector(random_double(min,max), random_double(min,max), random_double(min,max));
+}
 
 obj_Vector random_Unit_Sph() { // Analyse si le random vecteur est dedans une sphere unitaire, sinon, on fait "continue"
     while (true) {
@@ -136,11 +151,9 @@ obj_Vector random_Unit_Sph() { // Analyse si le random vecteur est dedans une sp
     }
 }
 
-/*
 obj_Vector random_Unit_Vec() { // On normalise le random vecteur dedans le sphere unitaire
     return unit_vector(random_Unit_Sph());
 }
-*/
 
 obj_Vector random_Hemis(const obj_Vector& arg_v) {
     obj_Vector in_unit_sphere = random_Unit_Sph();
@@ -149,5 +162,13 @@ obj_Vector random_Hemis(const obj_Vector& arg_v) {
     else
         return -in_unit_sphere;
 }
+
+obj_Vector reflect(const obj_Vector& arg_v1, const obj_Vector& arg_v2) {
+    return arg_v1 - 2*dot(arg_v1, arg_v2) * arg_v2;
+}
+
+// Que pour faciliter la differentiation 
+using obj_Point = obj_Vector;   // 3D point
+using obj_Color = obj_Vector;   // RGB color
 
 #endif
