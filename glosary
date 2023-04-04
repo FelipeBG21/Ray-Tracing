@@ -1,3 +1,40 @@
 typos de datos :
     auto = Automaticamente coge el tipo de dato que se le meta, es decir, como python
     
+
+BUSCAR UNA GRAFICA DE COLORES
+
+
+/*
+obj_Color blender_ray(const obj_Ray& ray, const figure_list world, int limit) {
+    obj_Record record;
+
+    // Si on est arrivé a la limit, on arrete de colleter plus de lumiere
+    if (limit <= 0) {
+        return obj_Color(0, 0, 0);
+    }
+
+    if (world.hit(ray, 0.001, infinity, record)) {
+        // Pour créer des ray aleatoires et par consequence crée le "diffuse materials"
+        //obj_Point target = record.attri_Point + record.attri_Normal + random_Unit_Vec();   PAS UTILISÉ POUR LE MOMMENT    2
+        //obj_Point target = record.attri_Point + random_Hemis(record.attri_Normal);     PAS UTILISÉ POUR LE MOMMENT        1
+        //return 0.5 * blender_ray(obj_Ray(record.attri_Point, target - record.attri_Point), world, limit - 1);
+        obj_Ray scattered;
+        obj_Color attenuation;
+        if (record.atrri_Mat_ptr -> scatter(ray, record, attenuation, scattered)) {
+            return attenuation * blender_ray(scattered, world, limit - 1);
+        }
+        return obj_Color(0, 0, 0);
+    }
+        
+        // Si hit return true, donc, on designe une esphere avec
+        // le couleur qui vient de ses normals
+    
+
+    // Si on a pas touche une figure, on fais le couleur du monde
+    obj_Vector dir_vec = unit_vector(ray.get_dir()); // Normalisation
+    double hit_t = 0.5 * (dir_vec.get_value1() + 1); // hit_t = y --> range (0,1)
+    return (1 - hit_t) * obj_Color(1, 1, 1) + hit_t * obj_Color(0.5, 0.7, 1); 
+    // On fait le blending dans le background
+}
+*/

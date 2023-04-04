@@ -1,12 +1,19 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
-#include "ray.h"
+//#include "ray.h" // ¿Commenter?
+#include "mousequeherramientas.h"
+
+
+class obj_Mat; // permite saber al archivo/clase que este objeto existe y que se va a usar, sin necesidad de definirlo
 
 struct obj_Record {
     obj_Point attri_Point;
     obj_Vector attri_Normal;
+    shared_ptr<obj_Mat> atrri_Mat_ptr;
     double attri_t;
+    double attri_u;
+    double attri_v;
     bool attri_dir_n;
 
     void normal_face(const obj_Ray& ray, const obj_Vector& normal_dir) {
