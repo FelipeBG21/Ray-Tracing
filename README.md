@@ -8,6 +8,12 @@ Those are the objectfis and at the time of writting this README.md, the two firs
 
 This Ray Tracer creates images based in the RGB color code and they are expresed as image.ppm file
 
+# Suggestions:
+
+* The vision system handles a concept of camera location and image direction which is where the camera points to perceive the scene.
+* It is strongly recommended to place the camera nearby in the rendering of spheres and move it away in the rendering of cubes to make them large.
+* The spatial location of vision can be located as the Z-axis in the direction exiting the screen, the Y up and down and finally in X to the sides.
+
 # Basic code, without interface or library like importation
 
 1. Requirements
@@ -193,16 +199,65 @@ This Ray Tracer creates images based in the RGB color code and they are expresed
     
 # Interface
 
-1. Requirements
-2. Executing
-3. Glossary
+The graphical interface have the purpose of facilitating the use of the library and the Ray Tracing program as a more visual tool. For this project, the SFML graphic library was implemented as it is one of the most popular, which facilitates the search for documentation for the construction of the same.
+There is extensive documentation on this page https://www.sfml-dev.org/documentation/2.5.1/
 
+1. Requirements
+	
+	To run the graphical interface you must download these libraries:
+
+		*   libsfml-dev
+		*   imagemagick-6.q16
+
+	For download the libraries you must run the next command line in the terminal for Linux:
+		sudo apt-get install libsfml-dev    and    sudo apt install imagemagick-6.q16 
+
+	For Windows you must follow the tutorial in the official web: https://www.sfml-dev.org/download.php
+
+2. Executing
+
+    In this implementation, the code will display a popup window with the graphical interface to select the objects to be rendered in Ray Tracing. Two objects are available: spheres 
+    and cubes with the possibility of applying 3 types of materials: opaque, light and metallic, the last one has an adjustable bar to choose the level of reflectance, where 0 is 
+    totally reflective and 1 is not. Also, there is a large color panel, a button to increase the radius measurement in the case of spheres and a positioning of objects in space. You 
+    must be careful when entering the values because the sphere receives 3 float values (But also receives integer values) separated by "," and the cubes receive 6 values referring to 
+    two points in each plane of space.
+
+    For example:
+
+        Sphere 0.0,10.0,5.6  --> It means that we are going to enter the coordinates of the center of the sphere.
+        Cube 130,0,65,295,165,230  --> It means that we are going to enter the following coordinates [X0=130, Y0=0, Z0=65] and [X1=295, Y1=165,Z1=230]
+
+        Note that the separation of the float value is with a dot and the separation between chords planes is with a comma. 
+
+    Restrictions:
+        *   It is mandatory to choose a material to make an object, if your choice is metal type, you must use the adjustable bar by clicking on it while scrolling to the desired     
+            value. When selecting a size you must click on the title metal to save the selection.
+        *   Object positioning: Sphere (X,Y,Z) and Cube (X0,Y0,Z0,X1,Y1,Z1) 
+        *   To increase the radius of the sphere, right click on the red "Ratio" counter and to decrease, left click (This button is configured by default to have a variation of 0.1   
+            but it is possible to modify this range in the GUI library).
+        *   To add an object to the image you must have selected an object, a material, a color, enter coordinates and click upload to follow.
+        *   Finally, to go to the rendering part and create the world, you need to click on play.
+
+    Note: On some objects, there is a giant sphere to make the floor effect and to see the reflective properties of the materials but the user can remove it if he wants to make a free 
+    design.
+
+        For executing the code you must run the next command line in the terminal:
+        
+        g++ -o exe join.cpp -lsfml-graphics -lsfml-window -lsfml-system
+        
+    Which will create an executable file normally named "exe".
+
+    After locating the executable file, we must execute the following line command to calculate the rays of the image, render and create an mmp file, which converts with the help of 
+    the "imagemagick" library to PNG:
+
+        In Ubunto : ./exe
+        In Windows : .\exe
+
+    Finally, the terminal throws the remaining execution time and a pop-up window appears with the rendering of the photo.
 
 # Library vapi_Rt
 
-1. Requirements
-2. Executing
-3. Glossary
+A library was made for future use. Which, it is intended to standardize some actions such as creating spheres, cubes; rendering, etc. This location is located in the "Library" file
 
 
 # Acknowledgments
