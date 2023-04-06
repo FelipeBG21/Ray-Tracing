@@ -14,8 +14,11 @@ class obj_Sphere : public figure {
         obj_Sphere() {};
         obj_Sphere(obj_Point center, double radius, shared_ptr<obj_Mat> material) : attri_Cen(center), attri_R(radius), atrri_Mat(material) {}; 
 
-        bool hit(const obj_Ray& ray, double t_min, double t_max, obj_Record& record) const;
+        bool hit(const obj_Ray& ray, double t_min, double t_max, obj_Record& record) const override; // si no se pone override podria haber comportamientos inesperados, pero funciono si el
+        // virtual es muy importante si alguien hereda de esta clase, y si no se pone, no se puede heredar de esta clase (o al menos no se puede sobreescribir)
         // On appelle la fonctionne hit qui viens de object, et on la recrie
+
+        virtual bool bounding_box(obj_AABB& box) const override;
 
     private:
         static void get_sphere_uv(const obj_Point& point, double& u, double& v) {
@@ -66,6 +69,12 @@ bool obj_Sphere::hit(const obj_Ray& ray, double t_min, double t_max, obj_Record&
     record.atrri_Mat_ptr = atrri_Mat;
     
     return true; 
-} 
+}
+
+bool obj_Sphere::bounding_box(obj_AABB& box) const {
+    box = obj_AABB(attri_Cen - obj_Vector(attri_R, attri_R, attri_R),
+                    attri_Cen + obj_Vector(attri_R, attri_R, attri_R));
+    return true;
+}
 
 #endif

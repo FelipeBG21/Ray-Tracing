@@ -1,9 +1,8 @@
 #ifndef FIGURE_H
 #define FIGURE_H
 
-//#include "ray.h" // ¿Commenter?
 #include "mousequeherramientas.h"
-
+#include "aabb.h"
 
 class obj_Mat; // permite saber al archivo/clase que este objeto existe y que se va a usar, sin necesidad de definirlo
 
@@ -32,6 +31,8 @@ class figure {
         virtual bool hit(const obj_Ray& ray, double t_min, double t_max, obj_Record& record) const = 0;
         // abstract base class
         // on doit l'utiliser dans une autre class (heritage)
+
+        virtual bool bounding_box(obj_AABB& output_box) const = 0;
 };
 
 #endif

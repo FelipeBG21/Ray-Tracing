@@ -4,9 +4,9 @@
 #include <memory>
 #include <limits>
 #include <cstdlib>
+#include <cmath>
 
 #include <random>
-
 
 using std::shared_ptr;
 using std::make_shared;
@@ -23,6 +23,11 @@ double random_double() {
 double random_double(double min, double max) {
     // Returns a random real in [min,max).
     return min + (max-min)*random_double();
+}
+
+int random_int(int min, int max) {
+    // Returns a random integer in [min,max].
+    return static_cast<int>(random_double(min, max + 1));
 }
 
 /*
