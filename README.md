@@ -183,22 +183,26 @@ This Ray Tracer creates images based in the RGB color code and they are expresed
                         
     Add to world :
         For adding object to wold
-        
-            world.add(make_shared<Object>(obj_Point(130, 0, 65), obj_Point(295, 165, 230), white));
+        The value specified define the object you will add to world
 
+            world.add(Object)
+
+        with
+            Object = Sphere, Cube or Plane, previously defined
+
+    
 # Interface
 
-1. Executing
+1. Requirements
+2. Executing
+3. Glossary
 
 
 # Library vapi_Rt
 
-1. Executing
-
-
-
-
-
+1. Requirements
+2. Executing
+3. Glossary
 
 
 # Acknowledgments
