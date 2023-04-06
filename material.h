@@ -11,28 +11,30 @@ class obj_Mat {
     public:
         // On a besoin de la fonction scatter pour savoir si on a touché un objet ou pas ???
         // La función scatter nos dice si los rayos que chocan con el material se reflejan o no o cuanto se atenuan
-        virtual bool scatter( // virtual est nécessaire parce qu'il permet que les objets qui héritent de material peuvent redefinir scatter
-            const obj_Ray& ray_in, const obj_Record& record, obj_Color& color_Attenue, obj_Ray& scattered
-        ) const = 0;
+        // virtual est nécessaire parce qu'il permet que les objets qui héritent de material peuvent redefinir scatter
+        virtual bool scatter( const obj_Ray& ray_in, const obj_Record& record, 
+                            obj_Color& color_Attenue, obj_Ray& scattered) const = 0;
 
         virtual obj_Color emitted(double u, double v, const obj_Point& point) const {
             return obj_Color(0, 0, 0);
         }
+
 };
 
-class mat_Dif : public obj_Mat {
+class mat_Diffu : public obj_Mat {
     public:
         shared_ptr<mat_Texture> attri_Diffu;
 
-        mat_Dif(const obj_Color& diffuse) : attri_Diffu(make_shared<mat_Color>(diffuse)) {} // con un obj_Color se crea un mat_Color y se guarda en attri_Diffu (shared_ptr<mat_Texture>)
+    public:
+
+        mat_Diffu(const obj_Color& diffuse) : attri_Diffu(make_shared<mat_Color>(diffuse)) {} // con un obj_Color se crea un mat_Color y se guarda en attri_Diffu (shared_ptr<mat_Texture>)
                                                                                             // es decir, desde un obj_Color se crea un shared pointer
-        mat_Dif(shared_ptr<mat_Texture> diffuse) : attri_Diffu(diffuse) {} // Un shared pointer ya creado se guarda en attri_Diffu (shared_ptr<mat_Texture>)
+        mat_Diffu(shared_ptr<mat_Texture> diffuse) : attri_Diffu(diffuse) {} // Un shared pointer ya creado se guarda en attri_Diffu (shared_ptr<mat_Texture>)
 
 
-        virtual bool scatter(
-            const obj_Ray& ray_in, const obj_Record& record, obj_Color& color_Attenue, obj_Ray& scattered
-        ) const override {
-            obj_Point scatter_direction = record.attri_Normal + random_Unit_Vec();
+        virtual bool scatter(const obj_Ray& ray_in, const obj_Record& record, 
+                            obj_Color& color_Attenue, obj_Ray& scattered) const override {
+            obj_Vector scatter_direction = record.attri_Normal + random_Unit_Sph();
 
             // If the scatter direction is near zero, we need to set it to the normal
             if (scatter_direction.near_zero()) // if near_zero() is true
@@ -74,11 +76,10 @@ class mat_Ligth : public obj_Mat {
         shared_ptr<mat_Texture> attri_Ligth;
 
         mat_Ligth(shared_ptr<mat_Texture> light) : attri_Ligth(light) {}
-        mat_Ligth(obj_Color light) : attri_Ligth(make_shared<mat_Color>(light)) {}
+        mat_Ligth(obj_Color light_Color) : attri_Ligth(make_shared<mat_Color>(light_Color)) {}
 
-        virtual bool scatter(
-            const obj_Ray& ray_in, const obj_Record& record, obj_Color& color_Attenue, obj_Ray& scattered
-        ) const override {
+        virtual bool scatter(const obj_Ray& ray_in, const obj_Record& record, 
+                            obj_Color& color_Attenue, obj_Ray& scattered) const override {
             return false;
         }
 
